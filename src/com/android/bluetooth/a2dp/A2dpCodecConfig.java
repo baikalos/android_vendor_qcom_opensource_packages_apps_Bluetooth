@@ -19,10 +19,12 @@ package com.android.bluetooth.a2dp;
 import android.bluetooth.BluetoothCodecConfig;
 import android.bluetooth.BluetoothCodecStatus;
 import android.bluetooth.BluetoothDevice;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
 import android.os.SystemProperties;
+import android.provider.Settings;
 import android.util.Log;
 import com.android.bluetooth.R;
 import com.android.bluetooth.btservice.AdapterService;
@@ -162,14 +164,30 @@ class A2dpCodecConfig {
             return null;
         }
 
+        final ContentResolver resolver = mContext.getContentResolver();
+
         int value;
         AdapterService mAdapterService = AdapterService.getAdapterService();
         String a2dp_offload_cap = mAdapterService.getA2apOffloadCapability();
+
+        try {
+            value = resources.getInteger(R.integer.a2dp_source_codec_priority_sbc);
+            if( Settings.Global.getInt(resolver, Settings.Global.BAIKALOS_BT_SBC_PRIORITY, 0) == 1 ) {
+                value = BluetoothCodecConfig.CODEC_PRIORITY_HIGHEST-1;
+            }
+            if( Settings.Global.getInt(resolver, Settings.Global.BAIKALOS_BT_SBC_DISABLED, 0) == 1 ) {
+                value = BluetoothCodecConfig.CODEC_PRIORITY_DISABLED;
+            }
+        } catch (NotFoundException e) {
+            value = BluetoothCodecConfig.CODEC_PRIORITY_DEFAULT;
+        }
+
         try {
             value = resources.getInteger(R.integer.a2dp_source_codec_priority_sbc);
         } catch (NotFoundException e) {
             value = BluetoothCodecConfig.CODEC_PRIORITY_DEFAULT;
         }
+
         if ((value >= BluetoothCodecConfig.CODEC_PRIORITY_DISABLED) && (value
                 < BluetoothCodecConfig.CODEC_PRIORITY_HIGHEST)) {
             mA2dpSourceCodecPrioritySbc = value;
@@ -181,6 +199,9 @@ class A2dpCodecConfig {
 
         try {
             value = resources.getInteger(R.integer.a2dp_source_codec_priority_aac);
+            if( Settings.Global.getInt(resolver, Settings.Global.BAIKALOS_BT_AAC_DISABLED, 0) == 1 ) {
+                value = BluetoothCodecConfig.CODEC_PRIORITY_DISABLED;
+            }
         } catch (NotFoundException e) {
             value = BluetoothCodecConfig.CODEC_PRIORITY_DEFAULT;
         }
@@ -195,6 +216,9 @@ class A2dpCodecConfig {
 
         try {
             value = resources.getInteger(R.integer.a2dp_source_codec_priority_aptx);
+            if( Settings.Global.getInt(resolver, Settings.Global.BAIKALOS_BT_APTX_DISABLED, 0) == 1 ) {
+                value = BluetoothCodecConfig.CODEC_PRIORITY_DISABLED;
+            }
         } catch (NotFoundException e) {
             value = BluetoothCodecConfig.CODEC_PRIORITY_DEFAULT;
         }
@@ -209,6 +233,9 @@ class A2dpCodecConfig {
         if(mAdapterService.isSplitA2DPSourceAPTXADAPTIVE()) {
             try {
                 value = resources.getInteger(R.integer.a2dp_source_codec_priority_aptx_adaptive);
+                if( Settings.Global.getInt(resolver, Settings.Global.BAIKALOS_BT_APTX_HD_DISABLED, 0) == 1 ) {
+                    value = BluetoothCodecConfig.CODEC_PRIORITY_DISABLED;
+                }
             } catch (NotFoundException e) {
                 value = BluetoothCodecConfig.CODEC_PRIORITY_DEFAULT;
             }
@@ -239,6 +266,9 @@ class A2dpCodecConfig {
         if(mAdapterService.isSplitA2DPSourceAPTXHD()) {
             try {
                 value = resources.getInteger(R.integer.a2dp_source_codec_priority_aptx_hd);
+                if( Settings.Global.getInt(resolver, Settings.Global.BAIKALOS_BT_APTX_HD_DISABLED, 0) == 1 ) {
+                    value = BluetoothCodecConfig.CODEC_PRIORITY_DISABLED;
+                }
             } catch (NotFoundException e) {
                 value = BluetoothCodecConfig.CODEC_PRIORITY_DEFAULT;
             }
@@ -258,6 +288,9 @@ class A2dpCodecConfig {
         if(mAdapterService.isSplitA2DPSourceLDAC()) {
             try {
                 value = resources.getInteger(R.integer.a2dp_source_codec_priority_ldac);
+                if( Settings.Global.getInt(resolver, Settings.Global.BAIKALOS_BT_LDAC_DISABLED, 0) == 1 ) {
+                    value = BluetoothCodecConfig.CODEC_PRIORITY_DISABLED;
+                }
             } catch (NotFoundException e) {
                 value = BluetoothCodecConfig.CODEC_PRIORITY_DEFAULT;
             }
