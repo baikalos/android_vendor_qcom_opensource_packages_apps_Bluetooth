@@ -55,12 +55,16 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.ArrayUtils;
 
+import com.android.internal.baikalos.BaikalSettings;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+import java.nio.ByteBuffer;
 
 /**
  * Provides Bluetooth A2DP profile, as a service in the Bluetooth application.
@@ -1407,6 +1411,42 @@ public class A2dpService extends ProfileService {
         }
     }
 
+    public int getSbcBitrate(BluetoothDevice device) {
+        int rate = 0;
+        try {
+            rate = BaikalSettings.getSbcBitrate(this, device);
+        }
+        catch(Exception e) {
+            Log.i(TAG, "getSbcBitrate exception:", e);
+            return 0;
+        }
+        Log.i(TAG, "getSbcBitrate:" + rate);
+        return rate;
+    }
+
+    public void setSbcBitrate(BluetoothDevice device, int value) {
+        Log.i(TAG, "setSbcBitrate :" + value);
+
+        //if( BaikalSettings.setSbcBitrate(device,value) ) {
+            BaikalSettings.setSbcBitrate(this, device,value);
+            mA2dpCodecConfig.setSbcBitrate(device, value);
+        //}
+    }
+
+    public void updateSbcBitrate(BluetoothDevice device) {
+        setSbcBitrate(device,getSbcBitrate(device));
+    }
+
+
+    byte[] intToByteArray(int value) {
+        return  ByteBuffer.allocate(4).putInt(value).array();
+    }
+
+    
+    int intFromByteArray(byte[] bytes) {
+        return ByteBuffer.wrap(bytes).getInt();
+    }
+
     // Handle messages from native (JNI) to Java
     void messageFromNative(A2dpStackEvent stackEvent) {
         Objects.requireNonNull(stackEvent.device,
@@ -1418,8 +1458,10 @@ public class A2dpService extends ProfileService {
                 Log.d(TAG, "messageFromNative: stackEvent.type: " + stackEvent.type);
                 if (stackEvent.type == A2dpStackEvent.EVENT_TYPE_CONNECTION_STATE_CHANGED) {
                     switch (stackEvent.valueInt) {
-                        case A2dpStackEvent.CONNECTION_STATE_CONNECTED:
                         case A2dpStackEvent.CONNECTION_STATE_CONNECTING: {
+                            updateSbcBitrate(device);
+                        }
+                        case A2dpStackEvent.CONNECTION_STATE_CONNECTED: {
                             boolean connectionAllowed;
                             synchronized (mVariableLock) {
                                 // Create a new state machine only when connecting to a device
@@ -1782,6 +1824,10 @@ public class A2dpService extends ProfileService {
                 }
             }
         }
+
+        int bitrate = getSbcBitrate(device);
+        setSbcBitrate(device,bitrate);
+
         if (!hasMandatoryCodec) {
             // Mandatory codec(SBC) is not selectable. It could be caused by the remote device
             // select codec before native finish get codec capabilities. Stop use this codec
@@ -2077,6 +2123,23 @@ public class A2dpService extends ProfileService {
             }
             service.setOptionalCodecsEnabled(device, value);
         }
+
+        public int getSbcBitrate(BluetoothDevice device) {
+            A2dpService service = getService();
+            if (service == null) {
+                return BluetoothA2dp.OPTIONAL_CODECS_PREF_UNKNOWN;
+            }
+            return service.getSbcBitrate(device);
+        }
+
+        public void setSbcBitrate(BluetoothDevice device, int value) {
+            A2dpService service = getService();
+            if (service == null) {
+                return;
+            }
+            service.setSbcBitrate(device, value);
+        }
+
     }
 
     @Override

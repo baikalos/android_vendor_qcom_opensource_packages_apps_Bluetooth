@@ -112,8 +112,10 @@ class A2dpCodecConfig {
         // Set the mandatory codec's priority to default, and remove the rest
         for (int i = 0; i < assigned_codec_length; i++) {
             BluetoothCodecConfig codecConfig = codecConfigArray[i];
-            if (!codecConfig.isMandatoryCodec()) {
-                codecConfigArray[i] = null;
+            if( codecConfig != null ) {
+                if (!codecConfig.isMandatoryCodec()) {
+                    codecConfigArray[i] = null;
+                }
             }
         }
 
@@ -133,14 +135,37 @@ class A2dpCodecConfig {
         // Set the mandatory codec's priority to highest, and remove the rest
         for (int i = 0; i < assigned_codec_length; i++) {
             BluetoothCodecConfig codecConfig = codecConfigArray[i];
-            if (codecConfig.isMandatoryCodec()) {
-                codecConfig.setCodecPriority(BluetoothCodecConfig.CODEC_PRIORITY_HIGHEST);
-            } else {
-                codecConfigArray[i] = null;
+            if (codecConfig != null ) {
+                if (codecConfig.isMandatoryCodec()) {
+                    codecConfig.setCodecPriority(BluetoothCodecConfig.CODEC_PRIORITY_HIGHEST);
+                } else {
+                    codecConfigArray[i] = null;
+                }
             }
         }
         mA2dpNativeInterface.setCodecConfigPreference(device, codecConfigArray);
     }
+
+    void setSbcBitrate(BluetoothDevice device, int bitrate) {
+
+        BluetoothCodecConfig[] codecConfigArray = assignCodecConfigPriorities();
+        if (codecConfigArray == null) {
+            return;
+        }
+
+        // Set the mandatory codec's priority to default, and remove the rest
+        for (int i = 0; i < assigned_codec_length; i++) {
+            BluetoothCodecConfig codecConfig = codecConfigArray[i];
+            if( codecConfig != null ) {
+                if (codecConfig.isMandatoryCodec()) {
+                    codecConfigArray[i].setCodecSpecific1(bitrate);
+                }
+            }
+        }
+
+        mA2dpNativeInterface.setCodecConfigPreference(device, codecConfigArray);
+    }
+
 
     // Get the codec type of the highest priority of selectableCodecs and codecConfig.
     private int getPrioitizedCodecType(BluetoothCodecConfig codecConfig,
