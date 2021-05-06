@@ -1115,13 +1115,13 @@ public class HeadsetService extends ProfileService {
 
     public boolean isInCall() {
         boolean isCallOngoing = mSystemInterface.isInCall();
-        Log.d(TAG," isInCall " + isCallOngoing);
+        //Log.d(TAG," isInCall " + isCallOngoing);
         return isCallOngoing;
     }
 
     public boolean isRinging() {
         boolean isRingOngoing = mSystemInterface.isRinging();
-        Log.d(TAG," isRinging " + isRingOngoing);
+        //Log.d(TAG," isRinging " + isRingOngoing);
         return isRingOngoing;
     }
 
@@ -1404,15 +1404,15 @@ public class HeadsetService extends ProfileService {
     public boolean isAudioOn() {
         enforceCallingOrSelfPermission(BLUETOOTH_PERM, "Need BLUETOOTH permission");
         int numConnectedAudioDevices = getNonIdleAudioDevices().size();
-        Log.d(TAG," isAudioOn: The number of audio connected devices "
-                 + numConnectedAudioDevices);
+        /*Log.d(TAG," isAudioOn: The number of audio connected devices "
+                 + numConnectedAudioDevices);*/
         return numConnectedAudioDevices > 0;
     }
 
     public boolean isScoOrCallActive() {
-      Log.d(TAG, "isScoOrCallActive(): Call Active:" + mSystemInterface.isInCall() +
-                                       "Call is Ringing:" + mSystemInterface.isInCall() +
-                                       "SCO is Active:" + isAudioOn());
+      /*Log.d(TAG, "isScoOrCallActive(): Call Active:" + mSystemInterface.isInCall() +
+                                       " Call is Ringing:" + mSystemInterface.isInCall() +
+                                       " SCO is Active:" + isAudioOn());*/
       if (mSystemInterface.isInCall() || (mSystemInterface.isRinging()) || isAudioOn()) {
           return true;
       } else {
@@ -1856,7 +1856,7 @@ public class HeadsetService extends ProfileService {
                 }
             }
         }
-        Log.d(TAG, "isTwsPlusActive returns" + ret);
+        //Log.d(TAG, "isTwsPlusActive returns" + ret);
         return ret;
     }
 
@@ -2196,7 +2196,7 @@ public class HeadsetService extends ProfileService {
         enforceCallingOrSelfPermission(BLUETOOTH_PERM, "Need BLUETOOTH permission");
         returnVal = BluetoothHeadset.isInbandRingingSupported(this) && !SystemProperties.getBoolean(
                 DISABLE_INBAND_RINGING_PROPERTY, true) && !mInbandRingingRuntimeDisable;
-        Log.d(TAG, "isInbandRingingEnabled returning: " + returnVal);
+        //Log.d(TAG, "isInbandRingingEnabled returning: " + returnVal);
         return returnVal;
     }
 
@@ -2263,7 +2263,7 @@ public class HeadsetService extends ProfileService {
     }
 
     public void sendA2dpStateChangeUpdate(int state) {
-        Log.d(TAG," sendA2dpStateChange newState = " + state);
+        //Log.d(TAG," sendA2dpStateChange newState = " + state);
         doForEachConnectedConnectingStateMachine(
               stateMachine -> stateMachine.sendMessage(HeadsetStateMachine.A2DP_STATE_CHANGED,
                                     state));
@@ -2291,14 +2291,14 @@ public class HeadsetService extends ProfileService {
         // When the call is active/held, the call audio must be active
         if (mSystemInterface.getHeadsetPhoneState().getNumActiveCall() > 0 ||
             mSystemInterface.getHeadsetPhoneState().getNumHeldCall() > 0 ) {
-            Log.d(TAG, "shouldCallAudioBeActive(): returning true, since call is active/held");
+            //Log.d(TAG, "shouldCallAudioBeActive(): returning true, since call is active/held");
             return true;
         }
         // When call is in  ringing state, SCO should not be accepted if
         // in-band ringtone is not enabled
         retVal = (mSystemInterface.isInCall() && !mSystemInterface.isRinging() )||
                  (mSystemInterface.isRinging() && isInbandRingingEnabled());
-        Log.d(TAG, "shouldCallAudioBeActive() returning " + retVal);
+        //Log.d(TAG, "shouldCallAudioBeActive() returning " + retVal);
         return retVal;
     }
 
@@ -2354,9 +2354,9 @@ public class HeadsetService extends ProfileService {
                                 final HeadsetStateMachine stateMachine
                                                   = mStateMachines.get(device);
                                 if (stateMachine != null) {
-                                Log.d(TAG, "onAudioStateChanged" +
-                                        "FromStateMachine: send +bvra:0");
-                                  stateMachine.sendMessage(
+                                //Log.d(TAG, "onAudioStateChanged" +
+                                //        "FromStateMachine: send +bvra:0");
+                                stateMachine.sendMessage(
                                     HeadsetStateMachine.VOICE_RECOGNITION_STOP,
                                     device);
                                 }
@@ -2376,7 +2376,7 @@ public class HeadsetService extends ProfileService {
                                  shouldPersistAudio()) {
                        if (mAdapterService != null && mAdapterService.isTwsPlusDevice(device)
                                                    && isAudioOn()) {
-                           Log.d(TAG, "TWS: Wait for both eSCO closed");
+                           //Log.d(TAG, "TWS: Wait for both eSCO closed");
                        } else {
                            if (mAdapterService != null && mAdapterService.isTwsPlusDevice(device) &&
                                isTwsPlusActive(mActiveDevice)) {
@@ -2385,8 +2385,8 @@ public class HeadsetService extends ProfileService {
                                   device. This should be the case where User
                                   transferred from BT to Phone Speaker from
                                   Call UI*/
-                                  Log.d(TAG,"don't transfer SCO. It is an" +
-                                             "explicit voice transfer from UI");
+                                  //Log.d(TAG,"don't transfer SCO. It is an" +
+                                  //           "explicit voice transfer from UI");
                                   return;
                            }
                            Log.d(TAG, "onAudioStateChangedFromStateMachine:"
