@@ -74,11 +74,12 @@
     <uses-permission android:name="com.android.email.permission.ACCESS_PROVIDER"/>
     <uses-permission android:name="com.android.email.permission.READ_ATTACHMENT"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.NETWORK_SETTINGS" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.OVERRIDE_WIFI_CONFIG" />
     <uses-permission android:name="android.permission.READ_DEVICE_CONFIG"/>
     <!-- Allows application to write to internal media storage -->
     <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_COMPANION_DEVICES"/>
 
     <uses-sdk android:minSdkVersion="14"/>
 
@@ -194,30 +195,30 @@
         <activity android:name=".opp.BluetoothOppBtEnableActivity"
                   android:process="@string/process"
                   android:excludeFromRecents="true"
-                  android:theme="@android:style/Theme.Material.Light.Dialog.Alert"
+                  android:theme="@style/dialog"
                   android:enabled="@bool/profile_supported_opp">
         </activity>
         <activity android:name=".opp.BluetoothOppBtErrorActivity"
                   android:process="@string/process"
                   android:excludeFromRecents="true"
-                  android:theme="@android:style/Theme.Material.Light.Dialog.Alert">
+                  android:theme="@style/dialog">
         </activity>
         <activity android:name=".opp.BluetoothOppBtEnablingActivity"
                   android:process="@string/process"
                   android:excludeFromRecents="true"
-                  android:theme="@android:style/Theme.Material.Light.Dialog.Alert"
+                  android:theme="@style/dialog"
                   android:enabled="@bool/profile_supported_opp">
         </activity>
         <activity android:name=".opp.BluetoothOppIncomingFileConfirmActivity"
                   android:process="@string/process"
                   android:excludeFromRecents="true"
-                  android:theme="@android:style/Theme.Material.Light.Dialog.Alert"
+                  android:theme="@style/dialog"
                   android:enabled="@bool/profile_supported_opp">
         </activity>
         <activity android:name=".opp.BluetoothOppTransferActivity"
                   android:process="@string/process"
                   android:excludeFromRecents="true"
-                  android:theme="@android:style/Theme.Material.Light.Dialog.Alert"
+                  android:theme="@style/dialog"
                   android:enabled="@bool/profile_supported_opp">
         </activity>
         <activity android:name=".opp.BluetoothOppTransferHistory"
@@ -235,7 +236,7 @@
         <activity android:name=".pbap.BluetoothPbapActivity"
             android:process="@string/process"
             android:excludeFromRecents="true"
-            android:theme="@android:style/Theme.Material.Light.Dialog.Alert"
+            android:theme="@style/dialog"
             android:enabled="@bool/profile_supported_pbap">
         </activity>
         <service

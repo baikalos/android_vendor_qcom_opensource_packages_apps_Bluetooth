@@ -25,6 +25,7 @@ import android.bluetooth.BluetoothProfile;
 import android.bluetooth.BluetoothProtoEnums;
 import android.bluetooth.OobData;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Message;
 import android.os.UserHandle;
 import android.util.Log;
@@ -239,18 +240,15 @@ final class BondStateMachine extends StateMachine {
                             infoLog("not transitioning to stable state");
                             break;
                         }
-                        /* this is either none/bonded, remove and transition */
+                        // This is either none/bonded, remove and transition, and also set
+                        // result=false to avoid adding the device to mDevices.
                         if (mDevices.contains(dev)) {
-                            result = !mDevices.remove(dev);
+                            mDevices.remove(dev);
                         } else  {
                             Log.w(TAG,"device already removed from mDevices");
                         }
+                        result = false;
                         if (mDevices.isEmpty()) {
-                            // Whenever mDevices is empty, then we need to
-                            // set result=false. Else, we will end up adding
-                            // the device to the list again. This prevents us
-                            // from pairing with a device that we just unpaired
-                            result = false;
                             transitionTo(mStableState);
                         }
                         if (newState == BluetoothDevice.BOND_NONE) {
@@ -338,7 +336,8 @@ final class BondStateMachine extends StateMachine {
 
     private boolean removeBond(BluetoothDevice dev, boolean transition) {
         if (mAdapterService == null) return false;
-        if (dev.getBondState() == BluetoothDevice.BOND_BONDED) {
+        DeviceProperties devProp = mRemoteDevices.getDeviceProperties(dev);
+        if (devProp != null && devProp.getBondState() == BluetoothDevice.BOND_BONDED) {
             byte[] addr = Utils.getBytesFromAddress(dev.getAddress());
             if (!mAdapterService.removeBondNative(addr)) {
                 Log.e(TAG, "Unexpected error while removing bond:");
@@ -507,7 +506,7 @@ final class BondStateMachine extends StateMachine {
             mRemoteDevices.addDeviceProperties(address);
         }
         infoLog("sspRequestCallback: " + address + " name: " + name + " cod: " + cod
-                + " pairingVariant " + pairingVariant + " passkey: " + passkey);
+                + " pairingVariant " + pairingVariant + " passkey: " + (Build.IS_DEBUGGABLE ? passkey : "******"));
         int variant;
         boolean displayPasskey = false;
         switch (pairingVariant) {
