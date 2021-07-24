@@ -44,7 +44,7 @@ public class SapService extends ProfileService {
     private static final int SDP_SAP_VERSION = 0x0102;
     private static final String LOG_TAG = "BluetoothSap";
     private static final String TAG = "SapService";
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
     public static final boolean VERBOSE = Log.isLoggable(LOG_TAG, Log.VERBOSE);
 
     /* Message ID's */

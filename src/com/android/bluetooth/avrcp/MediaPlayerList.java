@@ -58,7 +58,7 @@ import java.util.regex.Pattern;
  */
 public class MediaPlayerList {
     private static final String TAG = "AvrcpMediaPlayerList";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     static boolean sTesting = false;
 
     private static final String PACKAGE_SCHEME = "package";

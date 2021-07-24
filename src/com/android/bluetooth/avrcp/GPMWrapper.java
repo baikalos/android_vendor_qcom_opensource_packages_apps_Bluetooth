@@ -26,7 +26,7 @@ import android.util.Log;
  */
 class GPMWrapper extends MediaPlayerWrapper {
     private static final String TAG = "AvrcpGPMWrapper";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     @Override
     boolean isMetadataSynced() {

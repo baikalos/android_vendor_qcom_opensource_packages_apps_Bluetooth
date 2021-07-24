@@ -83,7 +83,7 @@ import com.android.bluetooth.avrcpcontroller.AvrcpControllerService;
  ******************************************************************************/
 
 public final class Avrcp {
-    static final boolean DEBUG = true;
+    static final boolean DEBUG = false;
     private static final String TAG = "Avrcp";
     private static final String ABSOLUTE_VOLUME_BLACKLIST = "absolute_volume_blacklist";
     private static final String AVRCP_VERSION_PROPERTY = "persist.bluetooth.avrcpversion";

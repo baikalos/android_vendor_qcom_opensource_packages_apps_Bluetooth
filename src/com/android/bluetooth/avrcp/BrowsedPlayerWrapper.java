@@ -34,7 +34,7 @@ import java.util.Map;
  */
 class BrowsedPlayerWrapper {
     private static final String TAG = "AvrcpBrowsedPlayerWrapper";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     enum ConnectionState {
         DISCONNECTED,

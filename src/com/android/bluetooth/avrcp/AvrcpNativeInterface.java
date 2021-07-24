@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class AvrcpNativeInterface {
     private static final String TAG = "AvrcpNativeInterface";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private static AvrcpNativeInterface sInstance;
     private AvrcpTargetService mAvrcpService;

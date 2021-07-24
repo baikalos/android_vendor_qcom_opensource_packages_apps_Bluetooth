@@ -46,7 +46,7 @@ import java.util.Objects;
  */
 public class AvrcpTargetService extends ProfileService {
     private static final String TAG = "AvrcpTargetService";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     private static final String AVRCP_ENABLE_PROPERTY = "persist.bluetooth.enablenewavrcp";
 
     private static final int AVRCP_MAX_VOL = 127;

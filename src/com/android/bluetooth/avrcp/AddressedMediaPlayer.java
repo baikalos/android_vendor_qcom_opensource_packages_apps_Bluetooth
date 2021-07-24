@@ -42,7 +42,7 @@ import java.util.List;
 
 public class AddressedMediaPlayer {
     private static final String TAG = "AddressedMediaPlayer";
-    private static final Boolean DEBUG = true;
+    private static final Boolean DEBUG = false;
 
     private static final long SINGLE_QID = 1;
     private static final String UNKNOWN_TITLE = "(unknown)";
