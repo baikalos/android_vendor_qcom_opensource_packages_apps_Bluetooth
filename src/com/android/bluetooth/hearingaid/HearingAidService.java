@@ -55,7 +55,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @hide
  */
 public class HearingAidService extends ProfileService {
-    private static final boolean DBG = true;
+    private static final boolean DBG = false;
     private static final String TAG = "HearingAidService";
 
     // Upper limit of all HearingAid devices: Bonded or Connected

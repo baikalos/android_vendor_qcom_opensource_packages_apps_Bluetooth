@@ -86,7 +86,7 @@ import android.telecom.TelecomManager;
 @VisibleForTesting
 public class HeadsetStateMachine extends StateMachine {
     private static final String TAG = "HeadsetStateMachine";
-    private static final boolean DBG = true;
+    private static final boolean DBG = false;
     // TODO(b/122040733) variable created as a placeholder to make build green after merge conflict; re-address
     private static final String MERGE_PLACEHOLDER = "";
 
@@ -568,7 +568,7 @@ public class HeadsetStateMachine extends StateMachine {
 
     public HeadsetStateBase getCurrentHeadsetStateMachineState() {
         synchronized(mLock) {
-            Log.e(TAG, "returning mCurrentState as " + mCurrentState);
+            //Log.e(TAG, "returning mCurrentState as " + mCurrentState);
             return mCurrentState;
         }
     }

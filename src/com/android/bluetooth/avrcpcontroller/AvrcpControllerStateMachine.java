@@ -51,7 +51,7 @@ import java.util.List;
  */
 class AvrcpControllerStateMachine extends StateMachine {
     static final String TAG = "AvrcpControllerStateMachine";
-    static final boolean DBG = true;
+    static final boolean DBG = false;
 
     //0->99 Events from Outside
     public static final int CONNECT = 1;

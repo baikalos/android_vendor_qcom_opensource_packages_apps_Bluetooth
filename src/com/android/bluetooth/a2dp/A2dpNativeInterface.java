@@ -38,7 +38,7 @@ import com.android.internal.annotations.VisibleForTesting;
  */
 public class A2dpNativeInterface {
     private static final String TAG = "A2dpNativeInterface";
-    private static final boolean DBG = true;
+    private static final boolean DBG = false;
     private BluetoothAdapter mAdapter;
 
     @GuardedBy("INSTANCE_LOCK")

@@ -97,7 +97,7 @@ import android.telecom.TelecomManager;
  */
 public class HeadsetService extends ProfileService {
     private static final String TAG = "HeadsetService";
-    private static final boolean DBG = true;
+    private static final boolean DBG = false;
     private static final String DISABLE_INBAND_RINGING_PROPERTY =
             "persist.bluetooth.disableinbandringing";
     private static final ParcelUuid[] HEADSET_UUIDS = {BluetoothUuid.HSP, BluetoothUuid.HFP};
@@ -867,7 +867,7 @@ public class HeadsetService extends ProfileService {
     // API methods
     public static synchronized HeadsetService getHeadsetService() {
         if (sHeadsetService == null) {
-            Log.w(TAG, "getHeadsetService(): service is NULL");
+            logD("getHeadsetService(): service is NULL");
             return null;
         }
         if (!sHeadsetService.isAvailable()) {

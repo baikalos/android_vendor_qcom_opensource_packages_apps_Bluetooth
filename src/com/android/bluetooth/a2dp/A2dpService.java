@@ -72,7 +72,7 @@ import java.nio.ByteBuffer;
  * @hide
  */
 public class A2dpService extends ProfileService {
-    private static final boolean DBG = true;
+    private static final boolean DBG = false;
     private static final String TAG = "A2dpService";
 
     private static A2dpService sA2dpService;

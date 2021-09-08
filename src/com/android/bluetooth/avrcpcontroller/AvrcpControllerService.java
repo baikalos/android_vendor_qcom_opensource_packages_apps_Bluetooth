@@ -48,8 +48,8 @@ import android.content.res.Resources.NotFoundException;
 public class AvrcpControllerService extends ProfileService {
     static final String TAG = "AvrcpControllerService";
     static final int MAXIMUM_CONNECTED_DEVICES = 5;
-    static final boolean DBG = true;
-    static final boolean VDBG = true;
+    static final boolean DBG = false;
+    static final boolean VDBG = false;
 
     public static final String MEDIA_ITEM_UID_KEY = "media-item-uid-key";
     /*

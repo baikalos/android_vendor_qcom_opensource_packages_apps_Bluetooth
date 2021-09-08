@@ -288,7 +288,9 @@ public class ScanManager {
 
         @Override
         public void handleMessage(Message msg) {
-            Log.i(TAG, "msg.what = " + msg.what);
+            if (DBG) {
+                Log.i(TAG, "msg.what = " + msg.what);
+            }
             switch (msg.what) {
                 case MSG_START_BLE_SCAN:
                     handleStartScan((ScanClient) msg.obj);

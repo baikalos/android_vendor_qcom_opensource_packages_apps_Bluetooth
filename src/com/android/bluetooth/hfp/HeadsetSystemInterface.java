@@ -46,7 +46,7 @@ import java.util.List;
 @VisibleForTesting
 public class HeadsetSystemInterface {
     private static final String TAG = HeadsetSystemInterface.class.getSimpleName();
-    private static final boolean DBG = true;
+    private static final boolean DBG = false;
 
     private final HeadsetService mHeadsetService;
     private final AudioManager mAudioManager;

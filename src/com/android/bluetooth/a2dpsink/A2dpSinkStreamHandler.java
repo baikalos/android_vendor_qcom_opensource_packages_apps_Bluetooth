@@ -54,7 +54,7 @@ import java.util.List;
  */
 public class A2dpSinkStreamHandler extends Handler {
     private static final String TAG = "A2dpSinkStreamHandler";
-    private static final boolean DBG = true;
+    private static final boolean DBG = false;
 
     // Configuration Variables
     private static final int DEFAULT_DUCK_PERCENT = 25;

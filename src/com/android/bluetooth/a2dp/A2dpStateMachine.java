@@ -69,7 +69,7 @@ import android.os.SystemProperties;
 import com.android.bluetooth.btservice.AdapterService;
 
 final class A2dpStateMachine extends StateMachine {
-    private static final boolean DBG = true;
+    private static final boolean DBG = false;
     private static final String TAG = "A2dpStateMachine";
 
     static final int CONNECT = 1;

@@ -34,7 +34,7 @@ import com.android.internal.util.StateMachine;
 
 public class A2dpSinkStateMachine extends StateMachine {
     static final String TAG = "A2DPSinkStateMachine";
-    static final boolean DBG = true;
+    static final boolean DBG = false;
 
     //0->99 Events from Outside
     public static final int CONNECT = 1;

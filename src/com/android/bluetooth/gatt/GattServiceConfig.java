@@ -23,8 +23,8 @@ import android.util.Log;
  */
 /*package*/ class GattServiceConfig {
     public static final String LOG_TAG = "BluetoothGatt";
-    public static final boolean DBG = true;
+    public static final boolean DBG = false;
     public static final boolean VDBG = Log.isLoggable(LOG_TAG, Log.VERBOSE);;
     public static final String TAG_PREFIX = "BtGatt.";
-    public static final boolean DEBUG_ADMIN = true;
+    public static final boolean DEBUG_ADMIN = false;
 }

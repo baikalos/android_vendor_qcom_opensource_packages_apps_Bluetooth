@@ -46,7 +46,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class A2dpSinkService extends ProfileService {
     private static final String TAG = "A2dpSinkService";
-    private static final boolean DBG = true;
+    private static final boolean DBG = false;
     //static final int MAX_ALLOWED_SINK_CONNECTIONS = 2;
 
     private final BluetoothAdapter mAdapter;

@@ -54,7 +54,7 @@ import java.util.concurrent.TimeUnit;
  * for Bluetooth persistent data.
  */
 public class DatabaseManager {
-    private static final boolean DBG = true;
+    private static final boolean DBG = false;
     private static final boolean VERBOSE = true;
     private static final String TAG = "BluetoothDatabase";
 
